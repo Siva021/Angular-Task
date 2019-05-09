@@ -15,6 +15,7 @@ export class AppComponent {
   options = [];
 
   dataValues = [];
+  dataTableValues = [];
   userData;
   rows:any;
   dtOptions: DataTables.Settings = {};
@@ -43,8 +44,9 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.dtOptions = {
-      pagingType: 'full_numbers',
+      // pagingType: '',
       paging:true,
+      responsive:true,
       order:[1]
     };
     this.generateForm = false;
@@ -83,6 +85,18 @@ export class AppComponent {
   }
   
   addColumn() {
+    if(this.columnName.trim() == "") {
+      window.alert("Please enter column name");
+      return;
+    }
+    if(this.columnType == ""){
+      window.alert("Please enter column type");
+      return;
+    }
+    if(this.columnType == 'multiselect' && this.multiselectValues.trim() == "") {
+      window.alert("Please enter multipleselect value");
+      return;
+    }
     this.options = [];
     if(this.columnType == 'multiselect') {
       let optionArr = this.multiselectValues.split(',');
@@ -91,6 +105,7 @@ export class AppComponent {
       })
     }
     this.tableEntries.push({name:this.columnName,type:this.columnType,options:this.options});
+    this.renderer2.selectRootElement('input').parentNode.children[0].focus();
     //console.log("Table Entries",JSON.stringify(this.tableEntries));
     this.columnName = "";
     this.multiselectValues = "";
@@ -163,6 +178,7 @@ export class AppComponent {
       window.alert("Please fill all the field and then press enter");
       return;
     }
+    this.dataTableValues.push(this.dataValues[y]);
     if(y == this.dataValues.length+1) {
       return;
     } else {
@@ -179,12 +195,14 @@ export class AppComponent {
   }
 
   createTable() {
+    this.dataTableValues = [];
     let obj = Object.keys(this.dataValues[0]);
     //console.log("obj",JSON.stringify(obj));
     var finalOpt;
     obj.map(val=>{
       finalOpt = this.dataValues.filter(data=>data[val] != "")
     })
+    this.dataTableValues = finalOpt;
     //console.log("finalOpt",finalOpt.length);
     if(finalOpt.length >= 2){
       this.showDatatable = true;
@@ -198,10 +216,6 @@ export class AppComponent {
   onFocus(id) {
     //console.log("ID",id);
     this.commonID = id;
-  }
-
-  getUserOption(opt) {
-    //console.log(opt);
   }
 
 }

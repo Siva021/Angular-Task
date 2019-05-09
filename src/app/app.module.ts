@@ -4,16 +4,10 @@ import { NgModule } from '@angular/core';
 import { DataTablesModule } from 'angular-datatables';
 
 import { AppComponent } from './app.component';
-import { TableFormComponent } from './table-form/table-form.component';
-import { TableViewComponent } from './table-view/table-view.component';
-import { ArrowkeyindexDirective } from './arrowkeyindex.directive';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    TableFormComponent,
-    TableViewComponent,
-    ArrowkeyindexDirective
+    AppComponent
   ],
   imports: [
     BrowserModule,

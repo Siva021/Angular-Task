@@ -1,14 +1,14 @@
 <nav class="navbar navbar-light bg-light">
   <span class="navbar-brand mb-0 h1 float-left">{{title}}</span>
   
-  <div class="dropdown float-left" *ngIf="dataValues.length > 0">
+  <div class="dropdown float-left" *ngIf="dataTableValues.length > 0">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Select Module
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-      <span class="dropdown-item" (click)="generateForm = false; hideColumn=true; showDatatable = false" >Column Entry Module</span>
+      <!-- <span class="dropdown-item" (click)="generateForm = false; hideColumn=true; showDatatable = false" >Column Entry Module</span> -->
       <span class="dropdown-item" (click)="generateForm=true; hideColumn=false; showDatatable=false">Table Entry Module</span>
-      <span class="dropdown-item" (click)="generateForm=false; hideColumn=false; showDatatable=true">Table View Module</span>
+      <span class="dropdown-item" (click)="generateForm=false; hideColumn=false; showDatatable=true; createTable()">Table View Module</span>
     </div>
   </div>
   <div class="float-right"><a href="https://github.com/Siva021/Angular-Task" target="_blank">
@@ -91,7 +91,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let data of dataValues;">
+        <tr *ngFor="let data of dataTableValues;">
           <td *ngFor="let tableEntry of tableEntries;" class="border text-center">{{data[tableEntry.name]}}</td>
         </tr>
       </tbody>
