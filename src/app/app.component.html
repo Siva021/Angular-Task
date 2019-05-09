@@ -21,8 +21,8 @@
   <div *ngIf="hideColumn">
     <h3 class="text-center mb-2">Column Module</h3>
     <div class="row">
-      <input class="col-3 float-left ml-2 manBorder" [(ngModel)] = "columnName">
-      <select class="col-3 float-left ml-2 manBorder" [(ngModel)] = "columntype" (ngModelChange) = "columnChange(columntype)">
+      <input class="col-3 float-left ml-2 manBorder" placeholder="Column Name" [(ngModel)] = "columnName">
+      <select class="col-3 float-left ml-2 manBorder" placeholder="Column Type" [(ngModel)] = "columntype" (ngModelChange) = "columnChange(columntype)">
         <option *ngFor="let list of dropDownList" [value]="list.value">{{list.name}}</option>
       </select>
       <input *ngIf="columntype == 'multiselect'" class="col-3 float-left ml-2 manBorder" [(ngModel)]="multiselectValues">
@@ -67,8 +67,8 @@
           <td *ngFor="let tableEntry of tableEntries;let x=index;" class="border text-center">
             <input id ="index_{{y}}_{{x}}" *ngIf="tableEntry.type == 'number'" (focus)="onFocus($event.target.id)" class="manBorder" type="number" [(ngModel)]="data[tableEntry.name]" pattern = "[0-9]" required>
             <input id ="index_{{y}}_{{x}}" *ngIf="tableEntry.type == 'date'" (focus)="onFocus($event.target.id)" class="manBorder" type="date" [(ngModel)]="data[tableEntry.name]" required>
-            <select id ="index_{{y}}_{{x}}" *ngIf="tableEntry.type == 'multiselect'" (focus)="onFocus($event.target.id)" class="manBorder" [(ngModel)]="data[tableEntry.name]" (change)="getUserOption(data[tableEntry.name])" required>
-              <option *ngFor="let opt of tableEntry.options" [value]="opt">{{opt}}</option>
+            <select id ="index_{{y}}_{{x}}" *ngIf="tableEntry.type == 'multiselect'" (focus)="onFocus($event.target.id)" class="manBorder" [(ngModel)]="data[tableEntry.name]" (ngModelChange)="getUserOption(data[tableEntry.name])" required>
+              <option *ngFor="let opt of tableEntry.options">{{opt}}</option>
             </select>
           </td>
         </tr>
