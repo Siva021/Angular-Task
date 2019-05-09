@@ -1,6 +1,13 @@
-# SimpleTask
+# Angular-Task
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.6.
+
+# Description
+
+The project is about the usage of datatable 
+
+Live demo for this project is available in below URL,
+https://angulardatatabletask.firebaseapp.com
 
 ## Development server
 
