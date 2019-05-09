@@ -8,7 +8,7 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Angular Datatable';
+  title = 'simpleTask';
   columnName="";
   columnType="";
   multiselectValues="";
@@ -21,13 +21,10 @@ export class AppComponent {
 
   generateForm:boolean;
   showDatatable:boolean;
-  hideColumn:boolean;
 
   @ViewChild('input') myInput;
 
   columns;
-
-  commonID;
 
   userForm:FormGroup;
   dropDownList = 
@@ -43,42 +40,36 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.dtOptions = {
-      pagingType: 'full_numbers',
-      paging:true,
-      order:[1]
+      pagingType: 'full_numbers'
     };
+
     this.generateForm = false;
     this.showDatatable = false;
-    this.hideColumn = true;
   }
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     if(this.generateForm) {
-      if(this.commonID != undefined) {
-        console.log("CommonID",this.commonID);
-        if (event.keyCode === 13) {
-          console.log("Key Enter Pressed");
+      if (event.keyCode === 39) {
+        console.log("Key Right Pressed");
+        if(this.renderer2.selectRootElement('input').parentNode.nextElementSibling.children[0] != null){
+          this.renderer2.selectRootElement('input').parentNode.nextElementSibling.children[0].focus();
         }
-        if (event.keyCode === 37) {
-          this.onLeft();      
-        }
-        if (event.keyCode === 38) {
-          // this.onUp();
-        }
-        if (event.keyCode === 39) {
-          this.onRight();
-        }
-        if (event.keyCode === 40) {
-          // this.onDown();
-        }if (event.keyCode === 13) {
-          this.onEnter();
+        else {
+          this.renderer2.selectRootElement('input').parentNode.children[0].focus();
         }
       }
-    } else if(!this.generateForm) {
-      if (event.keyCode === 13) {
-        this.addColumn();
-      }
+    //   if (event.keyCode === 37) {
+    //     this.onLeft();      
+    //   }
+    //   if (event.keyCode === 13) {
+    //     console.log("Key Enter Pressed");
+    //   }
+    // } else if(!this.generateForm) {
+    //   if (event.keyCode === 13) {
+    //     console.log("Key Enter Pressed");
+    //     this.addColumn();
+    //   }
     }
   }
   
@@ -117,7 +108,6 @@ export class AppComponent {
       }
       console.log("Data values",JSON.stringify(this.dataValues));
       this.generateForm = true;
-      this.hideColumn = false;
     }
   }
 
@@ -134,56 +124,26 @@ export class AppComponent {
 
   onRight() {
     console.log("Key Right Pressed");
-    console.log("NextSibling",this.renderer2.selectRootElement("#"+this.commonID).parentNode.nextElementSibling.children[0]);
-    if(this.renderer2.selectRootElement("#"+this.commonID).parentNode.nextElementSibling.children[0] != null){
-      this.renderer2.selectRootElement("#"+this.commonID).parentNode.nextElementSibling.children[0].focus();
-    }
-    else {
-      // this.renderer2.selectRootElement("#"+this.commonID).parentNode.children[0].focus();
-    }
+    this.renderer2.selectRootElement('input').nextElementSibling.focus();
   }
 
   onLeft() {
-    console.log("NextSibling",this.renderer2.selectRootElement("#"+this.commonID).parentNode.previousElementSibling.children[0]);
     console.log("Key Left Pressed");
-    if(this.renderer2.selectRootElement("#"+this.commonID).parentNode.previousElementSibling.children[0] != null){
-      this.renderer2.selectRootElement("#"+this.commonID).parentNode.previousElementSibling.children[0].focus();
-    }
-    else {
-      // this.renderer2.selectRootElement("#"+this.commonID).parentNode.children[0].focus();
-    }
+    this.renderer2.selectRootElement('select').previousElementSibling.focus();
   }
 
-  onEnter() {
-    console.log("Key Enter Pressed");
-    var idForUp = this.commonID.split('_');
-    let y = parseInt(idForUp[1]);
-    let x = idForUp[2];
-    console.log(JSON.stringify(idForUp));
-    if(y == this.dataValues.length+1) {
-      return;
-    } else {
-      y=y+1;
-      this.commonID = 'index_'+y+'_'+x;
-      console.log("CommonID after Down",this.commonID);
-      if(this.renderer2.selectRootElement("#"+this.commonID) != null){
-        this.renderer2.selectRootElement("#"+this.commonID).focus();
-      }
-      else {
-        this.renderer2.selectRootElement("#"+this.commonID).parentNode.children[0].focus();
-      }
-    }
+  onSubmit() {
   }
 
   createTable() {
     this.showDatatable = true;
-    this.generateForm = false;
     console.log("DataValue in datatable",this.dataValues);
   }
 
-  onFocus(id) {
-    console.log("ID",id);
-    this.commonID = id;
+  setId(y,x){
+    console.log("y",y);
+    console.log("x",x);
+    return "input_"+y+"_"+x;
   }
 
 }

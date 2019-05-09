@@ -1,24 +1,5 @@
-<nav class="navbar navbar-light bg-light">
-  <span class="navbar-brand mb-0 h1 float-left">{{title}}</span>
-  
-  <div class="dropdown float-left" *ngIf="dataValues.length > 0">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Select Module
-    </a>
-    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-      <span class="dropdown-item" (click)="generateForm = false; hideColumn=true; showDatatable = false" >Column Entry Module</span>
-      <span class="dropdown-item" (click)="generateForm=true; hideColumn=false; showDatatable=false">Table Entry Module</span>
-      <span class="dropdown-item" (click)="generateForm=false; hideColumn=false; showDatatable=true">Table View Module</span>
-    </div>
-  </div>
-  <div class="float-right"><a href="https://github.com/Siva021/Angular-Task" target="_blank">
-    <img src="../assets/imgs/github-logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-      GitHub
-    </a>
-  </div>
-</nav>
 <div class="p-3">
-  <div *ngIf="hideColumn">
+  <div *ngIf="!generateForm">
     <h3 class="text-center mb-2">Column Module</h3>
     <div class="row">
       <input class="col-3 float-left ml-2 manBorder" [(ngModel)] = "columnName">
@@ -34,7 +15,7 @@
     </div>
 
     <div class="mt-3 w-100">
-      <button class="btn btn-large btn-primary m-auto d-block" (click)="createForm()">Submit</button>
+      <button class="btn btn-large btn-primary m-auto d-block" [disabled] = "dataValues.length > 19" (click)="createForm()">Submit</button>
     </div>
   </div>
 
@@ -64,10 +45,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let data of dataValues;let y=index">
-          <td *ngFor="let tableEntry of tableEntries;let x=index;" class="border text-center">
-            <input id ="index_{{y}}_{{x}}" *ngIf="tableEntry.type == 'number'" (focus)="onFocus($event.target.id)" class="manBorder" type="number" [(ngModel)]="data[tableEntry.name]" pattern = "[0-9]" required>
-            <input id ="index_{{y}}_{{x}}" *ngIf="tableEntry.type == 'date'" (focus)="onFocus($event.target.id)" class="manBorder" type="date" [(ngModel)]="data[tableEntry.name]" required>
-            <select id ="index_{{y}}_{{x}}" *ngIf="tableEntry.type == 'multiselect'" (focus)="onFocus($event.target.id)" class="manBorder" [(ngModel)]="data[tableEntry.name]" (change)="getUserOption(data[tableEntry.name])" required>
+          <td *ngFor="let tableEntry of tableEntries;let i=index;" class="border text-center">
+            <input id ="'index_{{y}}_{{i}}'" appArrowkeyindex passID="'index_{{y}}_{{i}}'" *ngIf="tableEntry.type == 'number'" class="manBorder" type="number" [(ngModel)]="data[tableEntry.name]">
+            <input id ="'index_{{y}}_{{i}}'" appArrowkeyindex passID="'index_{{y}}_{{i}}'" *ngIf="tableEntry.type == 'date'" class="manBorder" type="date" [(ngModel)]="data[tableEntry.name]">
+            <select id ="'index_{{y}}_{{i}}'" appArrowkeyindex passID="'index_{{y}}_{{i}}'" *ngIf="tableEntry.type == 'multiselect'" class="manBorder" [(ngModel)]="data[tableEntry.name]" (change)="getUserOption(dataV)">
               <option *ngFor="let opt of tableEntry.options" [value]="opt">{{opt}}</option>
             </select>
           </td>
