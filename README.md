@@ -6,7 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 The project is about the usage of datatable 
 
-Live demo for this project is available in below URL,
+Live demo for this project is available in this URL,
 https://angulardatatabletask.firebaseapp.com
 
 ## Development server
